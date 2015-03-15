@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.zerotul</groupId>
+  <artifactId>jackson-datatype-specification</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20150315142249</lastUpdated>
+  </versioning>
+</metadata>
