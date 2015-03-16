@@ -113,24 +113,22 @@ public class SpecificationDeserializer<V extends Serializable, T extends Specifi
     }
 
     private PropertyDescriptor getDescriptor(JsonParser parser, String propertyName) throws JsonParseException {
-        PropertyDescriptor descriptor = propertyMap.get(propertyName);
+        PropertyDescriptor descriptor = propertyMap.get(propertyName.toLowerCase().trim());
         if (descriptor == null)
             throw new JsonParseException("descriptor for " + propertyName + " not found", parser.getCurrentLocation());
         return descriptor;
     }
 
     private Function<V, Object> createGetter(JsonParser parser, String propertyName) throws JsonParseException {
-        PropertyDescriptor descriptor = propertyMap.get(propertyName);
-        if (descriptor == null)
-            throw new JsonParseException("descriptior for " + propertyName + " not found", parser.getCurrentLocation());
+        PropertyDescriptor descriptor = getDescriptor(parser, propertyName);
 
         Function<V, Object> getter = (V reecord) -> {
             try {
                 return   descriptor.getReadMethod().invoke(reecord);
             } catch (IllegalAccessException e) {
-                throw new RuntimeException("invoke read method failed, methd = " + descriptor.getReadMethod().getName()+ " class = "+descriptor.getReadMethod().getDeclaringClass().getName(), e);
+                throw new RuntimeException("invoke read method failed, method = " + descriptor.getReadMethod().getName()+ " class = "+descriptor.getReadMethod().getDeclaringClass().getName(), e);
             } catch (InvocationTargetException e) {
-                throw new RuntimeException("invoke read method failed, methd = " + descriptor.getReadMethod().getName()+ " class = "+descriptor.getReadMethod().getDeclaringClass().getName(), e);
+                throw new RuntimeException("invoke read method failed, method = " + descriptor.getReadMethod().getName()+ " class = "+descriptor.getReadMethod().getDeclaringClass().getName(), e);
             }
         };
         return getter;
