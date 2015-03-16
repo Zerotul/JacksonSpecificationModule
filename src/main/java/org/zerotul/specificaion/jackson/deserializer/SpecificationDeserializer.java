@@ -42,6 +42,8 @@ public class SpecificationDeserializer<V extends Serializable, T extends Specifi
     @Override
     public T deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JsonProcessingException{
         JsonNode node = parser.getCodec().readTree(parser);
+        node = node.get("specification");
+        if(node==null) throw new JsonParseException("specification not found", parser.getCurrentLocation());
         String recordType = node.get("recordType").asText();
         try {
             Class<V> clazz = (Class<V>) Class.forName(recordType);

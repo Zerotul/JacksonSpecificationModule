@@ -22,7 +22,7 @@ import static org.zerotul.specification.restriction.Restrictions.equal;
  */
 public class JacksonSpecificationModuleTest {
 
-    static String  json ="{  \n" +
+    static String  json ="{\"specification\":{  \n" +
             "   \"recordType\":\"org.zerotul.specification.jackson.test.mock.Mock\",\n" +
             "   \"where\":{  \n" +
             "        \"restriction\":{\n" +
@@ -55,7 +55,7 @@ public class JacksonSpecificationModuleTest {
             "      \"fields\": [\"field1\"],\n" +
             "      \"orderType\": \"desc\"\n" +
             "   }\n" +
-            "}";
+            "}}";
 
     @Test
     public void testJsonSpecificationDeserialize() throws IOException, BuildException {
