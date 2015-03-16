@@ -71,7 +71,7 @@ public class SpecificationDeserializer<V extends Serializable, T extends Specifi
         propertyMap = new HashMap<>();
         BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
         for (PropertyDescriptor descriptor: beanInfo.getPropertyDescriptors()){
-            propertyMap.put(descriptor.getName(), descriptor);
+            propertyMap.put(descriptor.getName().trim().toLowerCase(), descriptor);
         }
         propertyMap = Collections.unmodifiableMap(propertyMap);
     }
