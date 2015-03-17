@@ -59,6 +59,15 @@ public class SpecificationDeserializer<V extends Serializable, T extends Specifi
                 addOrder(parser, from, orderNode);
             }
 
+            JsonNode max = node.get("max");
+            JsonNode offset = node.get("offset");
+            if(max!=null && max.asInt()>0){
+                from.max(max.asInt());
+                if(offset!=null){
+                    from.offset(offset.asInt());
+                }
+            }
+
             return (T) from.endFrom();
         } catch (ClassNotFoundException e) {
             throw new JsonParseException("property recordType "+recordType, parser.getCurrentLocation(), e);

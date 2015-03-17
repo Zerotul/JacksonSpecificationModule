@@ -54,7 +54,9 @@ public class JacksonSpecificationModuleTest {
             "   \"order\":{  \n" +
             "      \"fields\": [\"field1\"],\n" +
             "      \"orderType\": \"desc\"\n" +
-            "   }\n" +
+            "   },\n" +
+            "\"max\": 10,"+
+            "\"offset\": 0"+
             "}}";
 
     @Test
@@ -73,7 +75,7 @@ public class JacksonSpecificationModuleTest {
                  .restriction(equal(Mock::getField4, 33))
                 .predicate(PredicateOperation.AND)
                  .restriction(equal(Mock::getMock, mock))
-                .endWhere()
+                .endWhere().max(10).offset(0)
                 .order(desc(Mock::getField1)).endFrom();
         assertEquals(readValue, specification);
     }
