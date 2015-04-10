@@ -39,6 +39,8 @@ public class SpecificationDeserializer<V extends Serializable, T extends Specifi
 
     private Map<String, PropertyDescriptor> propertyMap;
 
+    private Class<V> recordClass;
+
     @Override
     public T deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JsonProcessingException{
         JsonNode node = parser.getCodec().readTree(parser);
@@ -47,6 +49,7 @@ public class SpecificationDeserializer<V extends Serializable, T extends Specifi
         String recordType = node.get("recordType").asText();
         try {
             Class<V> clazz = (Class<V>) Class.forName(recordType);
+            recordClass = clazz;
             FromSpecification<V> from = from(clazz);
             initPropertyMap(clazz);
             if(node.get("where")!=null){
@@ -124,7 +127,7 @@ public class SpecificationDeserializer<V extends Serializable, T extends Specifi
     private PropertyDescriptor getDescriptor(JsonParser parser, String propertyName) throws JsonParseException {
         PropertyDescriptor descriptor = propertyMap.get(propertyName.toLowerCase().trim());
         if (descriptor == null)
-            throw new JsonParseException("descriptor for " + propertyName + " not found", parser.getCurrentLocation());
+            throw new JsonParseException("descriptor for " + propertyName + " in class"+ recordClass.getName()+" not found", parser.getCurrentLocation());
         return descriptor;
     }
 
